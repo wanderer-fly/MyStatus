@@ -1,0 +1,6 @@
+# 依賴項目
+node_modules
+
+# 配置文件
+.env
+config.json
