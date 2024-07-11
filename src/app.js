@@ -1,51 +1,23 @@
 const express = require('express')
 const http = require('http')
-const WebSocket = require('ws')
-const fs = require('fs')
-
-const PORT = process.env.PORT || 3000
+const path = require('path')
+const config = require('./utils/config')
 
 const app = express()
 const server = http.createServer(app)
-const wss = new WebSocket.Server({ server })
-
-let currectStatus = "Unknown"
-
 app.use(express.json())
-app.use(express.static('public'))
 
-app.get('/status', (req, res) => {
-    res.json({ status: currectStatus })
-})
+// Static files
+app.use(express.static(path.join(__dirname, '../public')))
 
-app.post('/status', (req, res) => {
-    const { status } = req.body
-    console.log(req.body)
-    if (status) {
-        currectStatus = status
-        wss.clients.forEach(client => {
-            client.send(JSON.stringify({ status: currectStatus }))
-        })
-        res.status(200).json({ message: `Status updated to ${currectStatus}` })
-    } else {
-        res.status(400).json({ message: "Status not updated" })
-    }
-})
+// Routes
+const statusRouter = require('./modules/status/statusRouter')
+// const otherRouter = require('./modules/other/otherRouter')
 
-wss.on('connection', (ws) => {
-    ws.send(JSON.stringify({ status: currectStatus }))
+app.use('/status', statusRouter)
+// app.use('/other', otherRouter)
 
-    ws.on('message', (message) => {
-        const { status } = JSON.parse(message)
-        currectStatus = status
-
-        wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify({ status: currectStatus }))
-            }
-        })
-    })
-})
+const PORT = config.port
 
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
