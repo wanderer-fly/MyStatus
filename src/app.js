@@ -12,9 +12,11 @@ app.use(express.static(path.join(__dirname, '../public')))
 
 // Routes
 const statusRouter = require('./modules/status/statusRouter')
+const serverStatusRouter = require('./modules/serverStatus/serverStatusRouter')
 // const otherRouter = require('./modules/other/otherRouter')
 
 app.use('/status', statusRouter)
+app.use('/serverStatus', serverStatusRouter)
 // app.use('/other', otherRouter)
 
 const PORT = config.port

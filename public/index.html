@@ -3,10 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status Viewer</title>
+    <link rel="stylesheet" href="./css/default.css">
+    <link rel="stylesheet" href="./css/elements.css">
+    <title>MyStatus</title>
 </head>
 <body>
-    <h1>My Status: <span id="status">Loading...</span></h1>
-    <script src="./status.js"></script>
+    <div class="loading-mask show" id="loadingMask">
+        <div class="content">
+            <h2>Waiting for security timer...</h2>
+        </div>
+    </div>
+    <div class="floatWindow" id="statusBox">
+        <h3>我的狀態: <span id="status">Loading...</span></h3>
+        <h3>我的心情: <span id="emotion">Loading...</span></h3>
+    </div>
+
+    <div class="floatWindow" id="sysStatusBox">
+        <h2>System Information</h2>
+        <span>伺服器CPU佔用</span>
+        <progress id="cpuUsage" max="100" value="0"></progress>
+        <span>伺服器記憶體佔用</span>
+        <progress id="memoryUsage" max="0" value="0"></progress>
+        <h3>Docker Containers</h3>
+        <ul id="dockerContainers"></ul>
+    </div>
+
+    <div class="floatWindow" id="bio">
+        test
+    </div>
+
+    <script src="./js/status.js"></script>
+    <script src="./js/serverStatus.js"></script>
+    <script>
+        // Only global script here...
+
+        // Simulate loading completion
+        setTimeout(function() {
+            document.getElementById('loadingMask').classList.remove('show')
+        }, 500)
+    </script>
 </body>
 </html>
