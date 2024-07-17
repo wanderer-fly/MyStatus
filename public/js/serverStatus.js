@@ -40,26 +40,26 @@ function renderDockerContainers(containers) {
         const table = document.createElement('table')
         table.classList.add('container-table')
     
-        const headerRow = table.insertRow();
-        const headers = ['Name', 'Image', 'State', 'Status'];
+        const headerRow = table.insertRow()
+        const headers = ['Name', 'Image', 'State', 'Status']
         headers.forEach(headerText => {
-            const headerCell = document.createElement('th');
-            headerCell.textContent = headerText;
-            headerRow.appendChild(headerCell);
-        });
+            const headerCell = document.createElement('th')
+            headerCell.textContent = headerText
+            headerRow.appendChild(headerCell)
+        })
     
         containers.forEach(container => {
-            const row = table.insertRow();
+            const row = table.insertRow()
             ['name', 'image', 'state', 'status'].forEach(key => {
-                const cell = row.insertCell();
-                cell.textContent = container[key];
-            });
-        });
+                const cell = row.insertCell()
+                cell.textContent = container[key]
+            })
+        })
 
-        list.textContent = '';
-        list.appendChild(table);
+        list.textContent = ''
+        list.appendChild(table)
     } else {
-        list.textContent = 'No Docker containers found.';
+        list.textContent = 'No Docker containers found.'
     }
 }
 
