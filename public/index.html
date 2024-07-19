@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="./css/default.css">
     <link rel="stylesheet" href="./css/elements.css">
     <link rel="stylesheet" href="./css/avatar.css">
+    <script src="./js/utils/ws.js"></script>
     <title>MyStatus</title>
 </head>
 <body>
@@ -14,59 +15,51 @@
             <h2>Waiting for security timer...</h2>
         </div>
     </div>
-    <div class="floatWindow" id="statusBox">
-        <h3>我的狀態: <span id="status">Loading...</span></h3>
-        <h3>我的心情: <span id="emotion">Loading...</span></h3>
-    </div>
 
-    <div class="floatWindow" id="sysStatusBox">
-        <h2>System Information</h2>
-        <span>伺服器CPU佔用</span>
-        <progress id="cpuUsage" max="100" value="0"></progress>
-        <span>伺服器記憶體佔用</span>
-        <progress id="memoryUsage" max="0" value="0"></progress>
-        <h3>Docker Containers</h3>
-        <ul id="dockerContainers"></ul>
-    </div>
-
-    <div class="floatWindow" id="bio">
-        <div class="head-icon">
-            <img id="avatarImg" src="">
+    <!-- Main -->
+    <div class="container">
+        <div class="floatWindow" id="statusBox">
+            <h3>我的狀態: <span id="status">Loading...</span></h3>
+            <h3>我的心情: <span id="emotion">Loading...</span></h3>
         </div>
-        <h2 id="avatarName">avatarName</h2>
-        <p id="avatarBio">avatarBio</p>
-        <div id="avatarLinks"></div>
+    
+        <div class="floatWindow" id="sysStatusBox">
+            <h2>System Information</h2>
+            <span>伺服器CPU佔用</span>
+            <progress id="cpuUsage" max="100" value="0"></progress>
+            <span>伺服器記憶體佔用</span>
+            <progress id="memoryUsage" max="0" value="0"></progress>
+            <h3>Docker Containers</h3>
+            <ul id="dockerContainers"></ul>
+        </div>
+    
+        <div class="floatWindow" id="bio">
+            <div class="head-icon">
+                <img id="avatarImg" src="">
+            </div>
+            <h2 id="avatarName">avatarName</h2>
+            <p id="avatarBio">avatarBio</p>
+            <div id="avatarLinks"></div>
+        </div>
+    
+        <div class="floatWindow" id="wallpaper">
+            <h2>設定牆紙</h2>
+            <div id="wallpaper-imgs">
+                <img src="./res/background.JPG" alt="1">
+                <img src="./res/background.JPG" alt="1">
+                <img src="./res/background.JPG" alt="1">
+                <img src="./res/" alt="1">
+                <img src="./res/background.JPG" alt="1">
+                <img src="./res/test.PNG" alt="2">
+            </div>
+        </div>
     </div>
+    
 
     <script src="./js/status.js"></script>
     <script src="./js/serverStatus.js"></script>
-    <script>
-        // Only global script here...
-
-        // Simulate loading completion
-        setTimeout(function() {
-            document.getElementById('loadingMask').classList.remove('show')
-        }, 500)
-
-        // Avatar View
-        fetch('/avatar')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('avatarName').textContent = data.name
-                document.getElementById('avatarImg').src = data.avatarImg
-                document.getElementById('avatarBio').textContent = data.bio
-
-                const linksDiv = document.getElementById('avatarLinks')
-                for (const [site, url] of Object.entries(data.links)) {
-                    const linkElem = document.createElement('a')
-                    linkElem.href = url
-                    linkElem.textContent = site
-                    linkElem.target = '_blank' // New Tab
-                    linksDiv.appendChild(linkElem)
-                    linksDiv.appendChild(document.createElement('br'))
-                }
-            })
-            .catch(error => console.error('Error fetching avatar data:', error))
-    </script>
+    <script src="./js/background.js"></script>
+    <script src="./js/default.js"></script>
+    <script src="./js/utils/drag.js"></script>
 </body>
 </html>

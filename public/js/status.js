@@ -1,19 +1,23 @@
 const statusElement = document.getElementById('status')
 const emotionElement = document.getElementById('emotion')
 
-const wsURL = `ws://${window.location.hostname}:8080`
+fetch(`http://${window.location.hostname}:3000/status`)
+  .then(res => {
+    if (!res.ok) {
+      console.error('Error to GET /status')
+    } return res.json()
+  })
+  .then(data => {
+    statusElement.textContent = data.status || "Unknown"
+    emotionElement.textContent = data.emotion || "Unknown"
+  })
+  .catch(err => {
+    console.error('There was a problem with the fetch operation:', err)
+  })
 
-const ws = new WebSocket(wsURL)
-
-ws.onopen = () => {
-  console.log('WebSocket connected')
-  statusElement.textContent = "Unknown"
-  emotionElement.textContent = "Unknown"
-}
-
-ws.onmessage = (event) => {
+function handleStatus(data) {
   try {
-    const { status, emotion } = JSON.parse(event.data)
+    const { status, emotion } = data.data
     statusElement.textContent = status
     emotionElement.textContent = emotion
   } catch (error) {

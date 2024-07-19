@@ -65,6 +65,14 @@ router.get('/', (req, res) => {
     })
 })
 
+// setInterval(() => {
+//     getServerStatus().then(status => {
+//         WebSocket.broadcast({ serverStatus: status }, 'serverStatus')
+//     }).catch(err => {
+//         console.log('Failed to get server status')
+//     })
+// }, 1000)
+
 module.exports = router
  
 // getServerStatus().then(status => console.log(status)).catch(err => console.error('Error getting server status:', err))

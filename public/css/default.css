@@ -3,7 +3,7 @@
     padding: 0;
 }
 
-html, body {
+body {
     display: flex;
     background-image:url(../res/background.JPG);
     background-size: cover;
@@ -13,6 +13,24 @@ html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version */
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+.container > div {
+    position: relative;
+    width: (100% / 4);
 }
 
 /* on loading */
@@ -41,7 +59,7 @@ html, body {
 }
 
 .content {
-    z-index: 1; /* 确保内容在遮罩层上方 */
+    z-index: 1;
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;

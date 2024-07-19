@@ -1,3 +1,12 @@
+function handleServerStatus(status) {
+    if (status) {
+        renderSystemInfo(status.systemInfo)
+        renderDockerContainers(status.dockerContainers)
+    } else {
+        console.log('Server status is null or undefined.')
+    }
+}
+
 async function fetchServerStatus() {
     try {
         const response = await fetch('/serverStatus')
@@ -7,7 +16,7 @@ async function fetchServerStatus() {
         const data = await response.json()
         return data.serverStatus
     } catch (error) {
-        console.error('Error fetching server status:', error)
+        console.error('Error fetching server status')
         return null
     }
 }
@@ -26,40 +35,32 @@ function renderMemoryChart(usedMemory, totalMemory) {
 function renderDockerContainers(containers) {
     const list = document.getElementById('dockerContainers')
     list.innerHTML = ''
-    // if (containers && containers.length > 0) {
-    //     containers.forEach(container => {
-    //         const listItem = document.createElement('li')
-    //         listItem.textContent = `ID: ${container.name}, Image: ${container.image}, State: ${container.state}, Status: ${container.status}`
-    //         list.appendChild(listItem)
-    //     })
-    // } else {
-    //     list.textContent = 'No Docker containers found.'
-    // }
+    
     if (containers && containers.length > 0) {
 
         const table = document.createElement('table')
         table.classList.add('container-table')
     
-        const headerRow = table.insertRow()
-        const headers = ['Name', 'Image', 'State', 'Status']
+        const headerRow = table.insertRow();
+        const headers = ['Name', 'Image', 'State', 'Status'];
         headers.forEach(headerText => {
-            const headerCell = document.createElement('th')
-            headerCell.textContent = headerText
-            headerRow.appendChild(headerCell)
-        })
+            const headerCell = document.createElement('th');
+            headerCell.textContent = headerText;
+            headerRow.appendChild(headerCell);
+        });
     
         containers.forEach(container => {
-            const row = table.insertRow()
+            const row = table.insertRow();
             ['name', 'image', 'state', 'status'].forEach(key => {
-                const cell = row.insertCell()
-                cell.textContent = container[key]
-            })
-        })
+                const cell = row.insertCell();
+                cell.textContent = container[key];
+            });
+        });
 
-        list.textContent = ''
-        list.appendChild(table)
+        list.textContent = '';
+        list.appendChild(table);
     } else {
-        list.textContent = 'No Docker containers found.'
+        list.textContent = 'No Docker containers found.';
     }
 }
 
@@ -99,3 +100,7 @@ async function initialize() {
 }
 
 document.addEventListener('DOMContentLoaded', initialize)
+
+setInterval(() => {
+    initialize()
+}, 3000)

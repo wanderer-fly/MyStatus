@@ -1,5 +1,5 @@
 .floatWindow {
-    position: relative;
+    position: absolute;
     margin: 20px 20px 20px 20px;
     padding: 20px 20px 20px 20px;
     box-sizing: border-box;
@@ -11,6 +11,8 @@
     width: max-content;
     height: max-content;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    left: auto;
+    top: auto;
     /* overflow-x: hidden;
     overflow-y: scroll; */
 }
@@ -83,4 +85,33 @@
 
 #bio a:hover {
     color: #0056b3;
+}
+
+#wallpaper {
+    width: 500px;
+    height: 400px;
+}
+
+#wallpaper-imgs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    position: relative;
+    margin-top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+    height: 310px;
+    border: 2px solid rgba(233,233,233,0.8);
+    border-radius: 5px;
+    padding: 10px 5px 10px;
+    box-sizing: border-box;
+    gap: 5px;
+    overflow-y: scroll;
+}
+
+#wallpaper-imgs > img {
+    width: calc(100% / 2 - 2.5px - 2px * 2);
+    border: 2px solid rgba(233,233,233,0.8);
+    border-radius: 5px;
 }
